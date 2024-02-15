@@ -5,8 +5,8 @@ import type {PropsWithChildren} from 'react';
 type CurrencyButtonProps = PropsWithChildren<{
   name: string;
   flag: string;
-  symbol: string;
-  value: number;
+  symbol?: string;
+  value?: number;
 }>;
 
 export default function CurrencyButtons(props: CurrencyButtonProps): JSX.Element {

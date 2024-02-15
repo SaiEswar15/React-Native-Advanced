@@ -14,7 +14,7 @@ export default function CurrencyList() {
     <View>
       <Text>Currency List</Text>
       {currencyByRupee.map((el, index) : JSX.Element=>{
-        return <CurrencyButtons key = {index} name = {el.name} flag = {el.flag} value={el.value} symbol = {el.symbol}></CurrencyButtons>
+        return <CurrencyButtons key = {index} name = {el.name} flag = {el.flag}></CurrencyButtons>
       })}
       
     </View>
