@@ -11,11 +11,14 @@ type CurrencyButtonProps = PropsWithChildren<{
 
 export default function CurrencyButtons(props: CurrencyButtonProps): JSX.Element {
   return (
-    <View>
+    <>
       <Text>{props.name}</Text>
       <Text>{props.flag}</Text>
-    </View>
+    </>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  buttonContainer : {
+  },
+});
