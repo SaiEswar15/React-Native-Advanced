@@ -7,21 +7,57 @@ import {
   FlatList,
   Pressable
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {currencyByRupee} from './constants';
 import CurrencyButtons from './components/CurrencyButtons';
 
-export default function currency() {
+export default function currency(): JSX.Element {
 
-  function fn(item : any) : any
+  const [value, setValue] = useState(0);
+  const [convertedValue, setConvertedValue] = useState("");
+  const [convertedSymbol, setCovertedSymbol] = useState("-");
+
+
+
+  function changeConvertion(item : Currency) : void
   {
+    console.log(item.value);
+    
+    //the selected currency background should change
+    //if given value is 0
+    //snackbar should appear to enter the amount
+
+    if(!value)
+    {
+      console.log("please enter values");
+    }
+
+    const currencyValue : Number = Number(item.value);
+    // console.log(currencyValue);
+    const inputValue = value;
+    // console.log(inputValue);
+    const result : Number =  Number(currencyValue) * Number(inputValue);
+    // console.log(result);
+    setConvertedValue(result.toFixed(2));
+    setCovertedSymbol(item.symbol)
+    
+
+  }
+
+  function changeHandler(text : string): void
+  {
+    setValue(parseFloat(text));
+    console.log(value, typeof(value));
 
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.mainContainer}>
-        <Text style={styles.mainHeading}>currency converter</Text>
+        <View style = {styles.headingContainer}>
+          <Text style={styles.mainHeading}>currency converter</Text>
+        </View>
+        
 
         <View style={styles.inputContainer}>
           <View style={styles.inputSymbol}>
@@ -30,19 +66,21 @@ export default function currency() {
 
           <TextInput
             placeholder="enter the amount in INR"
+            
             maxLength={10}
             keyboardType={'numeric'}
             style={styles.inputfeild}
+            onChangeText={(text)=>changeHandler(text)}
           />
         </View>
 
         <View style={styles.outputContainer}>
           <View style={styles.outputContainerText}>
-            <Text>ss</Text>
+            <Text style = {styles.outputContainerOriginalText}>{convertedSymbol}</Text>
           </View>
 
           <View style={styles.outputContainerText}>
-            <Text>10038.887</Text>
+            <Text style = {styles.outputContainerOriginalText}>{convertedValue}</Text>
           </View>
         </View>
 
@@ -55,7 +93,7 @@ export default function currency() {
             return (
               <Pressable 
               style={styles.buttonContainer}
-              onPress={()=>fn(item)}
+              onPress={()=>changeConvertion(item)}
               >
                 <CurrencyButtons name = {item.name} flag = {item.flag} ></CurrencyButtons>
               </Pressable>
@@ -70,11 +108,13 @@ export default function currency() {
 const styles = StyleSheet.create({
   container: {},
   mainContainer: {
-    backgroundColor: 'lightblue',
-    display: 'flex',
-    width : "100%",
-    justifyContent: 'center',
-    alignItems: 'center',
+    // backgroundColor: 'lightblue',
+    
+  },
+  headingContainer : {
+    display : "flex",
+    alignItems : "center"
+
   },
   mainHeading: {
     // backgroundColor : "orchid",
@@ -110,12 +150,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   outputContainerText: {
-    height: 50,
-    backgroundColor: 'pink',
+    // backgroundColor: 'pink',
+    fontSize : 30,
     padding: 10,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  outputContainerOriginalText : {
+    fontSize : 30,
   },
   flatlist: {
     marginVertical: 10,
